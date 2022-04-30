@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="18a7b2361e864873923ccc2102d31d5b" Name="Diagram1">
-        <EntityTypeShape EntityType="DB03Model.Haber" Width="1.5" PointX="3" PointY="3.125" />
+      <Diagram DiagramId="18a7b2361e864873923ccc2102d31d5b" Name="Diagram1" ZoomLevel="139">
+        <EntityTypeShape EntityType="DB03Model.Haber" Width="1.5" PointX="2.5" PointY="0.75" />
         <EntityTypeShape EntityType="DB03Model.Kategori" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DB03Model.Kullanici" Width="1.5" PointX="0.75" PointY="3.375" />
-        <EntityTypeShape EntityType="DB03Model.Resim" Width="1.5" PointX="5.25" PointY="6.75" />
-        <EntityTypeShape EntityType="DB03Model.Yorum" Width="1.5" PointX="5.25" PointY="3.375" />
+        <EntityTypeShape EntityType="DB03Model.Kullanici" Width="1.5" PointX="0.625" PointY="2.625" />
+        <EntityTypeShape EntityType="DB03Model.Resim" Width="1.5" PointX="5.25" PointY="3.375" />
+        <EntityTypeShape EntityType="DB03Model.Yorum" Width="1.5" PointX="4.375" PointY="0.75" />
         <AssociationConnector Association="DB03Model.FK_Haber_ToKategori" />
         <AssociationConnector Association="DB03Model.FK_Haber_ToKullanici" />
         <AssociationConnector Association="DB03Model.FK_Resim_ToHaber" />
