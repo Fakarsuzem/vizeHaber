@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Haber">
+          <Key>
+            <PropertyRef Name="HaberId" />
+          </Key>
+          <Property Name="HaberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HaberBaslik" Type="nchar" MaxLength="10" />
+          <Property Name="Kategori" Type="int" />
+          <Property Name="HaberIcerik" Type="nchar" MaxLength="10" />
+          <Property Name="Yazar" Type="int" />
+          <Property Name="YayinlanmaTarihi" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kategori" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="KullaniciId" />
+          </Key>
+          <Property Name="KullaniciId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdiSoyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Eposta" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Resim">
+          <Key>
+            <PropertyRef Name="ResimId" />
+          </Key>
+          <Property Name="ResimId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResimAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="HaberId" Type="int" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="YorumId" />
+          </Key>
+          <Property Name="YorumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Yorum" Type="nchar" MaxLength="10" />
+          <Property Name="Kullanici" Type="int" />
+          <Property Name="Puan" Type="nchar" MaxLength="10" />
+          <Property Name="HaberId" Type="int" />
+        </EntityType>
+        <Association Name="FK_Haber_ToKategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+          <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="Kategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Haber_ToKullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="KullaniciId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="Yazar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resim_ToHaber">
+          <End Role="Haber" Type="Self.Haber" Multiplicity="0..1" />
+          <End Role="Resim" Type="Self.Resim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Haber">
+              <PropertyRef Name="HaberId" />
+            </Principal>
+            <Dependent Role="Resim">
+              <PropertyRef Name="HaberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToHaber">
+          <End Role="Haber" Type="Self.Haber" Multiplicity="0..1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Haber">
+              <PropertyRef Name="HaberId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="HaberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToKullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="KullaniciId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="Kullanici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB03ModelStoreContainer">
+          <EntitySet Name="Haber" EntityType="Self.Haber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resim" EntityType="Self.Resim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Haber_ToKategori" Association="Self.FK_Haber_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Haber_ToKullanici" Association="Self.FK_Haber_ToKullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resim_ToHaber" Association="Self.FK_Resim_ToHaber">
+            <End Role="Haber" EntitySet="Haber" />
+            <End Role="Resim" EntitySet="Resim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToHaber" Association="Self.FK_Yorum_ToHaber">
+            <End Role="Haber" EntitySet="Haber" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToKullanici" Association="Self.FK_Yorum_ToKullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB03Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Haber" EntityType="DB03Model.Haber" />
+          <EntitySet Name="Kategori" EntityType="DB03Model.Kategori" />
+          <EntitySet Name="Kullanici" EntityType="DB03Model.Kullanici" />
+          <EntitySet Name="Resim" EntityType="DB03Model.Resim" />
+          <EntitySet Name="Yorum" EntityType="DB03Model.Yorum" />
+          <AssociationSet Name="FK_Haber_ToKategori" Association="DB03Model.FK_Haber_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Haber_ToKullanici" Association="DB03Model.FK_Haber_ToKullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resim_ToHaber" Association="DB03Model.FK_Resim_ToHaber">
+            <End Role="Haber" EntitySet="Haber" />
+            <End Role="Resim" EntitySet="Resim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToHaber" Association="DB03Model.FK_Yorum_ToHaber">
+            <End Role="Haber" EntitySet="Haber" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToKullanici" Association="DB03Model.FK_Yorum_ToKullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Haber">
+          <Key>
+            <PropertyRef Name="HaberId" />
+          </Key>
+          <Property Name="HaberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HaberBaslik" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Kategori" Type="Int32" />
+          <Property Name="HaberIcerik" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Yazar" Type="Int32" />
+          <Property Name="YayinlanmaTarihi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kategori1" Relationship="DB03Model.FK_Haber_ToKategori" FromRole="Haber" ToRole="Kategori" />
+          <NavigationProperty Name="Kullanici" Relationship="DB03Model.FK_Haber_ToKullanici" FromRole="Haber" ToRole="Kullanici" />
+          <NavigationProperty Name="Resim" Relationship="DB03Model.FK_Resim_ToHaber" FromRole="Haber" ToRole="Resim" />
+          <NavigationProperty Name="Yorum" Relationship="DB03Model.FK_Yorum_ToHaber" FromRole="Haber" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kategori1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Haber" Relationship="DB03Model.FK_Haber_ToKategori" FromRole="Kategori" ToRole="Haber" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="KullaniciId" />
+          </Key>
+          <Property Name="KullaniciId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdiSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Eposta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Haber" Relationship="DB03Model.FK_Haber_ToKullanici" FromRole="Kullanici" ToRole="Haber" />
+          <NavigationProperty Name="Yorum" Relationship="DB03Model.FK_Yorum_ToKullanici" FromRole="Kullanici" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Resim">
+          <Key>
+            <PropertyRef Name="ResimId" />
+          </Key>
+          <Property Name="ResimId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResimAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HaberId" Type="Int32" />
+          <NavigationProperty Name="Haber" Relationship="DB03Model.FK_Resim_ToHaber" FromRole="Resim" ToRole="Haber" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="YorumId" />
+          </Key>
+          <Property Name="YorumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Yorum1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Kullanici" Type="Int32" />
+          <Property Name="Puan" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="HaberId" Type="Int32" />
+          <NavigationProperty Name="Haber" Relationship="DB03Model.FK_Yorum_ToHaber" FromRole="Yorum" ToRole="Haber" />
+          <NavigationProperty Name="Kullanici1" Relationship="DB03Model.FK_Yorum_ToKullanici" FromRole="Yorum" ToRole="Kullanici" />
+        </EntityType>
+        <Association Name="FK_Haber_ToKategori">
+          <End Type="DB03Model.Kategori" Role="Kategori" Multiplicity="0..1" />
+          <End Type="DB03Model.Haber" Role="Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="Kategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Haber_ToKullanici">
+          <End Type="DB03Model.Kullanici" Role="Kullanici" Multiplicity="0..1" />
+          <End Type="DB03Model.Haber" Role="Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="KullaniciId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="Yazar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resim_ToHaber">
+          <End Type="DB03Model.Haber" Role="Haber" Multiplicity="0..1" />
+          <End Type="DB03Model.Resim" Role="Resim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Haber">
+              <PropertyRef Name="HaberId" />
+            </Principal>
+            <Dependent Role="Resim">
+              <PropertyRef Name="HaberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToHaber">
+          <End Type="DB03Model.Haber" Role="Haber" Multiplicity="0..1" />
+          <End Type="DB03Model.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Haber">
+              <PropertyRef Name="HaberId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="HaberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToKullanici">
+          <End Type="DB03Model.Kullanici" Role="Kullanici" Multiplicity="0..1" />
+          <End Type="DB03Model.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="KullaniciId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="Kullanici" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB03ModelStoreContainer" CdmEntityContainer="DB03Entities">
+          <EntitySetMapping Name="Haber">
+            <EntityTypeMapping TypeName="DB03Model.Haber">
+              <MappingFragment StoreEntitySet="Haber">
+                <ScalarProperty Name="YayinlanmaTarihi" ColumnName="YayinlanmaTarihi" />
+                <ScalarProperty Name="Yazar" ColumnName="Yazar" />
+                <ScalarProperty Name="HaberIcerik" ColumnName="HaberIcerik" />
+                <ScalarProperty Name="Kategori" ColumnName="Kategori" />
+                <ScalarProperty Name="HaberBaslik" ColumnName="HaberBaslik" />
+                <ScalarProperty Name="HaberId" ColumnName="HaberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="DB03Model.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="Kategori1" ColumnName="Kategori" />
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici">
+            <EntityTypeMapping TypeName="DB03Model.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Eposta" ColumnName="Eposta" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="AdiSoyadi" ColumnName="AdiSoyadi" />
+                <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resim">
+            <EntityTypeMapping TypeName="DB03Model.Resim">
+              <MappingFragment StoreEntitySet="Resim">
+                <ScalarProperty Name="HaberId" ColumnName="HaberId" />
+                <ScalarProperty Name="ResimAdi" ColumnName="ResimAdi" />
+                <ScalarProperty Name="ResimId" ColumnName="ResimId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yorum">
+            <EntityTypeMapping TypeName="DB03Model.Yorum">
+              <MappingFragment StoreEntitySet="Yorum">
+                <ScalarProperty Name="HaberId" ColumnName="HaberId" />
+                <ScalarProperty Name="Puan" ColumnName="Puan" />
+                <ScalarProperty Name="Kullanici" ColumnName="Kullanici" />
+                <ScalarProperty Name="Yorum1" ColumnName="Yorum" />
+                <ScalarProperty Name="YorumId" ColumnName="YorumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
